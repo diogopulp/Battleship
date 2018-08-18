@@ -8,16 +8,11 @@ public class Player
     private static final int NUM_OF_SHIPS = 7;
 
     public Ship[] ships;
-    public Board playerGrid;
-    public Board oppGrid;
+    public Board playerBoard;
+    public Board oppBoard;
 
     public Player()
     {
-        if (NUM_OF_SHIPS != 7)
-        {
-            throw new IllegalArgumentException("ERROR! Num of ships must be 7");
-        }
-
         ships = new Ship[NUM_OF_SHIPS];
         for (int i = 0; i < NUM_OF_SHIPS; i++)
         {
@@ -25,15 +20,15 @@ public class Player
             ships[i] = tempShip;
         }
 
-        playerGrid = new Board();
-        oppGrid = new Board();
+        playerBoard = new Board();
+        oppBoard = new Board();
     }
 
     public void addShips()
     {
         for (Ship s: ships)
         {
-            playerGrid.addShip(s);
+            playerBoard.addShip(s);
         }
     }
 
@@ -54,6 +49,6 @@ public class Player
     {
         s.setLocation(row, col);
         s.setDirection(direction);
-        playerGrid.addShip(s);
+        playerBoard.addShip(s);
     }
 }

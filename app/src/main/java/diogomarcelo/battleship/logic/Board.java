@@ -5,7 +5,6 @@ public class Board
     private Location[][] board;
     private int points;
 
-    // Constants for number of rows and columns.
     public static final int NUM_ROWS = 8;
     public static final int NUM_COLS = 8;
 
@@ -94,24 +93,60 @@ public class Board
         if (!(s.isDirectionSet()) || !(s.isLocationSet()))
             throw new IllegalArgumentException("ERROR! Direction or Location is unset/default");
 
-        if (dir == 0) // Hortizontal
+        if (dir == 0) // Horizontal
         {
+            // i = Drawing start point
+            // i < col+length = Drawing finish point
             for (int i = col; i < col+length; i++)
             {
-                //System.out.println("DEBUG: row = " + row + "; col = " + i);
                 board[row][i].setShip(true);
                 board[row][i].setLengthOfShip(length);
+                board[row][i].setWidthOfShip(width);
                 board[row][i].setDirectionOfShip(dir);
+
+                // 5 Pieces ship
+                if(s.getWidth() == 2 && board[row-1][col].hasShip() == false && board[row+1][col].hasShip() == false){
+
+                    // Put piece above
+                    board[row-1][col].setShip(true);
+                    board[row-1][col].setLengthOfShip(length);
+                    board[row-1][col].setWidthOfShip(width);
+                    board[row-1][col].setDirectionOfShip(dir);
+
+                    // Put piece bellow
+                    board[row+1][col].setShip(true);
+                    board[row+1][col].setLengthOfShip(length);
+                    board[row+1][col].setWidthOfShip(width);
+                    board[row+1][col].setDirectionOfShip(dir);
+                }
             }
         }
         else if (dir == 1) // Vertical
         {
+            // i = Drawing Starting point
+            // i < row+length = Drawing finish point
             for (int i = row; i < row+length; i++)
             {
-                //System.out.println("DEBUG: row = " + row + "; col = " + i);
                 board[i][col].setShip(true);
                 board[i][col].setLengthOfShip(length);
+                board[i][col].setWidthOfShip(width);
                 board[i][col].setDirectionOfShip(dir);
+
+                // 5 Pieces ship
+                if(s.getWidth() == 2 && board[row][col-1].hasShip() == false && board[row][col+1].hasShip() == false){
+
+                    // Put piece on left
+                    board[row][col-1].setShip(true);
+                    board[row][col-1].setLengthOfShip(length);
+                    board[row][col-1].setWidthOfShip(width);
+                    board[row][col-1].setDirectionOfShip(dir);
+
+                    // Put piece on right
+                    board[row][col+1].setShip(true);
+                    board[row][col+1].setLengthOfShip(length);
+                    board[row][col+1].setWidthOfShip(width);
+                    board[row][col+1].setDirectionOfShip(dir);
+                }
             }
         }
     }

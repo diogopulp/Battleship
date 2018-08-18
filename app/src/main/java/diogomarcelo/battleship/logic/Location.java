@@ -90,6 +90,11 @@ public class Location
         lengthOfShip = val;
     }
 
+    public void setWidthOfShip(int val)
+    {
+        widthOfShip = val;
+    }
+
     public int getDirectionOfShip()
     {
         return directionOfShip;
