@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">battleship</string>
+    <string name="app_name">BattleShip</string>
+    <string name="newsinglegame_bt">Single Player</string>
+    <string name="newmultiplayergame_bt">Multi Player</string>
 </resources>
