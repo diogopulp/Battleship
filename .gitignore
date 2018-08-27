@@ -1,7 +1,6 @@
 # Built application files
 *.apk
 *.ap_
-*.idea
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -64,6 +63,3 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
-gradlew.bat
-gradlew
-gradle
