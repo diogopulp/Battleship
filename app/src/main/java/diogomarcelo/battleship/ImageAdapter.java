@@ -44,7 +44,7 @@ public class ImageAdapter extends BaseAdapter {
         int k=0;
         for (int i=0; i< 64; i++){
 
-            mThumbIds[k] = k;
+            //mThumbIds[k] = R.drawable.block;
             //mThumbIds[k] = board.getPiece(i).getImgPath();
             k++;
 

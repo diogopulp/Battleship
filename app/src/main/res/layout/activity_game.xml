@@ -11,12 +11,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <LinearLayout
             android:layout_width="375dp"
             android:layout_height="375dp"
-            android:background="@drawable/board">
+            android:background="@drawable/board"
+            android:layout_gravity="center"
+            tools:context=".GridLayoutActivity"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:numColumns="8"
+            android:verticalSpacing="0dp"
+            android:horizontalSpacing="0dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center">
+
 
 
             <GridView
