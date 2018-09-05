@@ -2,14 +2,15 @@ package diogomarcelo.battleship.logic;
 
 public class Game {
 
-    Board boardP1, boardP2;
     Player p1, p2;
 
     public Game(int gameType){
 
+        p1 = new Player();
+        p2 = new Player();
+
         // Human VS CPU
         if (gameType == 1){
-
 
 
         }
@@ -20,10 +21,5 @@ public class Game {
 
     }
 
-    public void setupPieces(Board board){
-
-        //board.addShip();
-        
-    }
 
 }

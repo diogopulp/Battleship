@@ -9,7 +9,6 @@ public class Player
 
     public Ship[] ships;
     public Board playerBoard;
-    public Board oppBoard;
 
     public Player()
     {
@@ -21,7 +20,6 @@ public class Player
         }
 
         playerBoard = new Board();
-        oppBoard = new Board();
     }
 
     public void addShips()
