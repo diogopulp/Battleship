@@ -49,8 +49,6 @@ public class GameActivity extends AppCompatActivity {
         width = displayMetrics.widthPixels;
 
         gridView = findViewById(R.id.playBoard);
-        //adapter = new ImageAdapter(this, height, width);
-        //gridView.setAdapter(adapter);
 
         p1 = new Player(this,height,width);
         //p2 = new Player();
@@ -79,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
         // Human VS CPU
         if (game_type.equalsIgnoreCase("SINGLE_PLAYER")){
 
-            //setup(p1);
+            p1.setup(position);
 
         }
         // Human VS Human
@@ -91,85 +89,6 @@ public class GameActivity extends AppCompatActivity {
 
 
     }
-
-    /*
-    public void setup(Player p){
-
-        // Boats Position
-
-        System.out.println();
-        int counter = 1;
-        int normCounter = 0;
-        while (p.numOfShipsLeft() > 0)
-        {
-            for (Ship s: p.ships)
-            {
-                System.out.println("\nShip #" + counter + ": Length-" + s.getLength());
-                int row = -1;
-                int col = -1;
-                int dir = -1;
-                while(true)
-                {
-                    System.out.print("Type in row (A-J): ");
-                    //String userInputRow = reader.next();
-                    //userInputRow = userInputRow.toUpperCase();
-                    //row = convertLetterToInt(userInputRow);
-
-                    if(position >= 0 && position <= 7)
-                        row = 0;
-                    if(position >= 8 && position <= 15)
-                        row = 1;
-                    if(position >= 16 && position <= 23)
-                        row = 2;
-                    if(position >= 24 && position <= 31)
-                        row = 3;
-                    if(position >= 32 && position <= 39)
-                        row = 4;
-                    if(position >= 40 && position <= 47)
-                        row = 5;
-                    if(position >= 48 && position <= 55)
-                        row = 6;
-                    if(position >= 56 && position <= 7)
-                        row = 7;
-
-
-                    //System.out.print("Type in column (1-10): ");
-                    //col = reader.nextInt();
-                    //col = convertUserColToProCol(col);
-
-                    if(position == 0 || position%8 ==1)
-                        col = 0;
-
-
-                    System.out.print("Type in direction (0-H, 1-V): ");
-                    //dir = reader.nextInt();
-
-                    //System.out.println("DEBUG: " + row + col + dir);
-
-                    /*if (col >= 0 && col <= 9 && row != -1 && dir != -1) // Check valid input
-                    {
-                        if (!hasErrors(row, col, dir, p, normCounter)) // Check if errors will produce (out of bounds)
-                        {
-                            break;
-                        }
-                    }
-
-                    System.out.println("Invalid location!");
-                }
-
-                //System.out.println("FURTHER DEBUG: row = " + row + "; col = " + col);
-                p.ships[normCounter].setLocation(row, col);
-                p.ships[normCounter].setDirection(dir);
-                p.playerBoard.addShip(p.ships[normCounter]);
-                System.out.println();
-                System.out.println("You have " + p.numOfShipsLeft() + " remaining ships to place.");
-
-                normCounter++;
-                counter++;
-            }
-        }
-
-    }*/
 
     public void vibrate() {
 
