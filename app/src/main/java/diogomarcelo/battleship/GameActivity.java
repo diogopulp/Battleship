@@ -22,7 +22,6 @@ public class GameActivity extends AppCompatActivity {
     Player p1, p2;
 
     TextView textView;
-    ImageAdapter adapter;
     DisplayMetrics displayMetrics;
     GridView gridView;
     int height, width;
@@ -50,11 +49,13 @@ public class GameActivity extends AppCompatActivity {
         width = displayMetrics.widthPixels;
 
         gridView = findViewById(R.id.playBoard);
-        adapter = new ImageAdapter(this, height, width);
-        gridView.setAdapter(adapter);
+        //adapter = new ImageAdapter(this, height, width);
+        //gridView.setAdapter(adapter);
 
-        p1 = new Player();
-        p2 = new Player();
+        p1 = new Player(this,height,width);
+        //p2 = new Player();
+
+        gridView.setAdapter(p1);
 
         gridView.setOnTouchListener(new View.OnTouchListener() {
 
