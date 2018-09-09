@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
         // Human VS CPU
         if (game_type.equalsIgnoreCase("SINGLE_PLAYER")){
 
-            setup(p1);
+            //setup(p1);
 
         }
         // Human VS Human
@@ -91,6 +91,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /*
     public void setup(Player p){
 
         // Boats Position
@@ -140,11 +141,11 @@ public class GameActivity extends AppCompatActivity {
 
 
                     System.out.print("Type in direction (0-H, 1-V): ");
-                    dir = reader.nextInt();
+                    //dir = reader.nextInt();
 
                     //System.out.println("DEBUG: " + row + col + dir);
 
-                    if (col >= 0 && col <= 9 && row != -1 && dir != -1) // Check valid input
+                    /*if (col >= 0 && col <= 9 && row != -1 && dir != -1) // Check valid input
                     {
                         if (!hasErrors(row, col, dir, p, normCounter)) // Check if errors will produce (out of bounds)
                         {
@@ -167,7 +168,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-    }
+    }*/
 
     public void vibrate() {
 
