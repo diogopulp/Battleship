@@ -11,6 +11,7 @@ public class Location
     private int lengthOfShip;
     private int widthOfShip;
     private int directionOfShip;
+    private int img;
 
     public Location()
     {
@@ -19,6 +20,15 @@ public class Location
         lengthOfShip = -1;
         widthOfShip = -1;
         directionOfShip = -1;
+        img = 0;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 
     public boolean checkHit()

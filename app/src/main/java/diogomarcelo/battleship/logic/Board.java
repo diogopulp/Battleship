@@ -1,5 +1,7 @@
 package diogomarcelo.battleship.logic;
 
+import diogomarcelo.battleship.R;
+
 public class Board
 {
     private Location[][] board;
@@ -103,6 +105,7 @@ public class Board
                 board[row][i].setLengthOfShip(length);
                 board[row][i].setWidthOfShip(width);
                 board[row][i].setDirectionOfShip(dir);
+                board[row][i].setImg(R.drawable.block);
 
                 // 5 Pieces ship
                 if(s.getWidth() == 2 && board[row-1][col].hasShip() == false && board[row+1][col].hasShip() == false){
@@ -112,12 +115,14 @@ public class Board
                     board[row-1][col].setLengthOfShip(length);
                     board[row-1][col].setWidthOfShip(width);
                     board[row-1][col].setDirectionOfShip(dir);
+                    board[row][i].setImg(R.drawable.block);
 
                     // Put piece bellow
                     board[row+1][col].setShip(true);
                     board[row+1][col].setLengthOfShip(length);
                     board[row+1][col].setWidthOfShip(width);
                     board[row+1][col].setDirectionOfShip(dir);
+                    board[row][i].setImg(R.drawable.block);
                 }
             }
         }

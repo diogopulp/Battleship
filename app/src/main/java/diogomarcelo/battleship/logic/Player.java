@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import diogomarcelo.battleship.R;
+
 public class Player extends BaseAdapter
 {
     // These are the lengths of all of the ships.
@@ -20,7 +22,7 @@ public class Player extends BaseAdapter
 
     private Context mContext;
     private Integer[] mThumbIds;
-    private Board board;
+    //private Board board;
     private int screenHeight, screenWidth;
 
     public Player(Context c, int height, int width)
@@ -32,15 +34,14 @@ public class Player extends BaseAdapter
         System.out.println("Height: " + screenHeight);
         System.out.println("Width: " + screenWidth);
 
-        board = new Board();
+        playerBoard = new Board();
         mThumbIds = new Integer[64];
 
         for (int i=0;i<64;i++)
             mThumbIds[i] = 0;
 
-
         mContext = c;
-        updateImages(this.board);
+        updateImages(this.playerBoard);
 
         ships = new Ship[NUM_OF_SHIPS];
         for (int i = 0; i < NUM_OF_SHIPS; i++)
@@ -95,7 +96,7 @@ public class Player extends BaseAdapter
     }
 
     public Board getBoard(){
-        return this.board;
+        return this.playerBoard;
     }
 
     public int getCount() {
@@ -118,7 +119,7 @@ public class Player extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
-        updateImages(this.board);
+        updateImages(this.playerBoard);
 
         double width, height;
 
@@ -155,7 +156,8 @@ public class Player extends BaseAdapter
 
         //System.out.println(mThumbIds);
         try {
-            imageView.setImageResource(mThumbIds[position]);
+            //imageView.setImageResource(mThumbIds[position]);
+            imageView.setImageResource(playerBoard.get(positionToRow(position),positionToRow(position)).getImg());
         }
         catch (Exception e) {
 
@@ -222,27 +224,15 @@ public class Player extends BaseAdapter
         int counter = 1;
         int normCounter = 0;
 
-        int row = -1;
-        int col = -1;
-        int dir = -1;
-
-        System.out.print("Type in row (A-J): ");
-        //String userInputRow = reader.next();
-        //userInputRow = userInputRow.toUpperCase();
-        //row = convertLetterToInt(userInputRow);
-
+        int row;
+        int col;
+        int dir;
 
         row = this.positionToRow(position);
-
-
-        //System.out.print("Type in column (1-10): ");
-        //col = reader.nextInt();
-        //col = convertUserColToProCol(col);
-
         col = this.positionToCol(position);
 
         System.out.print("Type in direction (0-H, 1-V): ");
-        //dir = reader.nextInt();
+
 
         //System.out.println("DEBUG: " + row + col + dir);
 

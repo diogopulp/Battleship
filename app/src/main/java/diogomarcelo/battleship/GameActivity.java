@@ -67,6 +67,12 @@ public class GameActivity extends AppCompatActivity {
 
                 Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
 
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                    if(p1.numOfShipsLeft()>0){
+                        p1.setup(position);
+                    }
+
+                    
                 return event.getAction() == MotionEvent.ACTION_MOVE;
 
             }
@@ -77,7 +83,6 @@ public class GameActivity extends AppCompatActivity {
         // Human VS CPU
         if (game_type.equalsIgnoreCase("SINGLE_PLAYER")){
 
-            p1.setup(position);
 
         }
         // Human VS Human
