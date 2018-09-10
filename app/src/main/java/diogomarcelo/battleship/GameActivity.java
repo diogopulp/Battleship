@@ -72,7 +72,15 @@ public class GameActivity extends AppCompatActivity {
                         p1.setup(position);
                     }
 
-                    
+                for(int i=0; i<8; i++) {
+                    for(int j=0; j<8; j++) {
+                        //Log.i("row1", Integer.toString(p1.playerBoard.get(i, j).getImg()));
+                        System.out.print(Integer.toString(p1.playerBoard.get(i, j).getImg()));
+                    }
+                    System.out.println();
+                }
+
+                p1.notifyDataSetChanged();
                 return event.getAction() == MotionEvent.ACTION_MOVE;
 
             }
