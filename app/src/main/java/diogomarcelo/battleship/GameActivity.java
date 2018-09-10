@@ -50,12 +50,15 @@ public class GameActivity extends AppCompatActivity {
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
-        gridViewP1 = findViewById(R.id.playBoard);
+        gridViewP1 = findViewById(R.id.playBoard1);
+        gridViewP2 = findViewById(R.id.playBoard2);
+        gridViewP2.setVisibility(View.GONE);
 
         p1 = new Player(this,height,width);
-        //p2 = new Player();
+        p2 = new Player(this,height,width);
 
         gridViewP1.setAdapter(p1);
+        gridViewP2.setAdapter(p2);
 
         gridViewP1.setOnTouchListener(new View.OnTouchListener() {
 
@@ -67,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
 
                 position = gridViewP1.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
 
-                Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
+                //Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN)
                     if(p1.numOfShipsLeft()>0){
@@ -85,6 +88,38 @@ public class GameActivity extends AppCompatActivity {
 
         });
 
+        gridViewP2.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int currentXPos = (int) event.getX();
+                int currentYPos = (int) event.getY();
+
+                position = gridViewP2.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
+
+                //Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                    if(p2.numOfShipsLeft()>0){
+                        p2.setup(position);
+                        p2.notifyDataSetChanged();
+                    }
+
+                if(p2.numOfShipsLeft()==0){
+                    //nextButton.setVisibility(View.VISIBLE);
+                    gridViewP2.setVisibility(View.GONE);
+                    gridViewP1.setVisibility(View.VISIBLE);
+
+                }
+
+                return event.getAction() == MotionEvent.ACTION_MOVE;
+
+            }
+
+        });
+
+
         // Human VS CPU
         if (game_type.equalsIgnoreCase("SINGLE_PLAYER")){
 
@@ -100,6 +135,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View view) {
                 gridViewP1.setVisibility(View.GONE);
                 nextButton.setVisibility(View.GONE);
+                gridViewP2.setVisibility(View.VISIBLE);
             }
         });
 
