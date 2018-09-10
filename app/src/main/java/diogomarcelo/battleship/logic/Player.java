@@ -148,7 +148,6 @@ public class Player extends BaseAdapter
         if (convertView == null) {
 
 
-
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams((int)width, (int)height));
@@ -269,7 +268,7 @@ public class Player extends BaseAdapter
         {
             int checker = length + col;
             //System.out.println("DEBUG: checker is " + checker);
-            if (checker > 10)
+            if (checker > 8)
             {
                 System.out.println("SHIP DOES NOT FIT");
                 return true;
@@ -281,7 +280,7 @@ public class Player extends BaseAdapter
         {
             int checker = length + row;
             //System.out.println("DEBUG: checker is " + checker);
-            if (checker > 10)
+            if (checker > 8)
             {
                 System.out.println("SHIP DOES NOT FIT");
                 return true;
@@ -300,6 +299,80 @@ public class Player extends BaseAdapter
                     System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
                     return true;
                 }
+
+                // -------- Navios em redor --------
+
+                // ACIMA
+                if(row != 0){
+                    if(p.playerBoard.hasShip(row-1, i))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO
+                if(row != 7){
+                    if(p.playerBoard.hasShip(row+1, i))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ESQUERDA
+                if(i != 0){
+                    if(p.playerBoard.hasShip(row, i-1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // DIREITA
+                if(i != 7){
+                    if(p.playerBoard.hasShip(row, i+1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+               /* // ACIMA ESQUERDA
+                if(row != 0 && i !=0){
+                    if(p.playerBoard.hasShip(row-1, i-1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ACIMA DIREITA
+                if(row != 0 && i !=7){
+                    if(p.playerBoard.hasShip(row-1, i+1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO ESQUERDA
+                if(row != 7 && i !=0){
+                    if(p.playerBoard.hasShip(row+1, i-1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO DIREITA
+                if(row != 7 && i !=7){
+                    if(p.playerBoard.hasShip(row+1, i+1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }*/
             }
         }
         else if (dir == 1) // Vertical
@@ -313,6 +386,75 @@ public class Player extends BaseAdapter
                     System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
                     return true;
                 }
+
+
+                // DIREITA
+                if(col != 0) {
+                    if (p.playerBoard.hasShip(i, col - 1)) {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ESQUERDA
+                if(col != 7) {
+                    if (p.playerBoard.hasShip(i, col + 1)) {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO
+                if(i != 0) {
+                    if (p.playerBoard.hasShip(i-1, col)) {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ACIMA
+                if(i != 7) {
+                    if (p.playerBoard.hasShip(i+1, col)) {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO DIREITA
+                /*if(col != 0 && i !=0){
+                    if(p.playerBoard.hasShip(col-1, i-1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ACIMA DIREITA
+                if(col != 0 && i !=7){
+                    if(p.playerBoard.hasShip(col-1, i+1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ABAIXO ESQUERDA
+                if(col != 7 && i !=0){
+                    if(p.playerBoard.hasShip(col+1, i-1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }
+
+                // ACIMA ESQUERDA
+                if(col != 7 && i !=7){
+                    if(p.playerBoard.hasShip(col+1, i+1))
+                    {
+                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        return true;
+                    }
+                }*/
             }
         }
 

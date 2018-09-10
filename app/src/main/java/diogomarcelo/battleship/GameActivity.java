@@ -1,21 +1,19 @@
 package diogomarcelo.battleship;
 
-import android.animation.TimeAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import diogomarcelo.battleship.logic.Player;
-import diogomarcelo.battleship.logic.Ship;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -23,7 +21,8 @@ public class GameActivity extends AppCompatActivity {
 
     TextView textView;
     DisplayMetrics displayMetrics;
-    GridView gridView;
+    GridView gridViewP1, gridViewP2;
+    Button nextButton;
     int height, width;
     int position = -1;
 
@@ -33,6 +32,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         textView = findViewById(R.id.tvTest);
+        nextButton = findViewById(R.id.btn_next);
+
+        nextButton.setVisibility(View.GONE);
 
         Intent intent= getIntent();
         Bundle b = intent.getExtras();
@@ -48,14 +50,14 @@ public class GameActivity extends AppCompatActivity {
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
-        gridView = findViewById(R.id.playBoard);
+        gridViewP1 = findViewById(R.id.playBoard);
 
         p1 = new Player(this,height,width);
         //p2 = new Player();
 
-        gridView.setAdapter(p1);
+        gridViewP1.setAdapter(p1);
 
-        gridView.setOnTouchListener(new View.OnTouchListener() {
+        gridViewP1.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -63,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
                 int currentXPos = (int) event.getX();
                 int currentYPos = (int) event.getY();
 
-                position = gridView.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
+                position = gridViewP1.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
 
                 Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
 
@@ -71,8 +73,11 @@ public class GameActivity extends AppCompatActivity {
                     if(p1.numOfShipsLeft()>0){
                         p1.setup(position);
                         p1.notifyDataSetChanged();
-
                     }
+
+                if(p1.numOfShipsLeft()==0){
+                    nextButton.setVisibility(View.VISIBLE);
+                }
 
                 return event.getAction() == MotionEvent.ACTION_MOVE;
 
@@ -89,6 +94,14 @@ public class GameActivity extends AppCompatActivity {
         else{
 
         }
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gridViewP1.setVisibility(View.GONE);
+                nextButton.setVisibility(View.GONE);
+            }
+        });
 
 
 
