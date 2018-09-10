@@ -70,21 +70,13 @@ public class GameActivity extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN)
                     if(p1.numOfShipsLeft()>0){
                         p1.setup(position);
+                        p1.notifyDataSetChanged();
+
                     }
 
-                for(int i=0; i<8; i++) {
-                    for(int j=0; j<8; j++) {
-                        //Log.i("row1", Integer.toString(p1.playerBoard.get(i, j).getImg()));
-                        System.out.print(Integer.toString(p1.playerBoard.get(i, j).getImg()));
-                    }
-                    System.out.println();
-                }
-
-                p1.notifyDataSetChanged();
                 return event.getAction() == MotionEvent.ACTION_MOVE;
 
             }
-
 
         });
 

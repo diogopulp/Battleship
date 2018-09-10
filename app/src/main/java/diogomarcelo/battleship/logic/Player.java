@@ -17,6 +17,8 @@ public class Player extends BaseAdapter
     private static final int[] SHIP_WIDTHS = {0, 0, 0, 0, 0, 0, 2};
     private static final int NUM_OF_SHIPS = 7;
 
+    int setupNormCounter = 0;
+
     public Ship[] ships;
     public Board playerBoard;
 
@@ -85,11 +87,14 @@ public class Player extends BaseAdapter
     public void updateImages(Board board){
 
         int k=0;
-        for (int i=0; i< 64; i++){
+        for (int i=0; i< 8; i++){
+            for(int j=0; j<8; j++) {
 
-            //mThumbIds[k] = R.drawable.block;
-            //mThumbIds[k] = board.getPiece(i).getImgPath();
-            k++;
+                //mThumbIds[k] = R.drawable.block;
+                //mThumbIds[k] = board.getPiece(i).getImgPath();
+                mThumbIds[k] = playerBoard.get(i,j).getImg();
+                k++;
+            }
 
         }
 
@@ -156,8 +161,8 @@ public class Player extends BaseAdapter
 
         //System.out.println(mThumbIds);
         try {
-            //imageView.setImageResource(mThumbIds[position]);
-            imageView.setImageResource(playerBoard.get(positionToRow(position),positionToRow(position)).getImg());
+            imageView.setImageResource(mThumbIds[position]);
+            //imageView.setImageResource(playerBoard.get(positionToRow(position),positionToRow(position)).getImg());
         }
         catch (Exception e) {
 
@@ -220,42 +225,98 @@ public class Player extends BaseAdapter
 
         // Boats Position
 
-        System.out.println();
         int counter = 1;
-        int normCounter = 0;
 
-        int row;
-        int col;
-        int dir;
+        int row = -1;
+        int col = -1;
+        int dir = -1;
 
         row = this.positionToRow(position);
         col = this.positionToCol(position);
 
-        System.out.print("Type in direction (0-H, 1-V): ");
+        dir = 1;
 
+        System.out.println("DEBUG: " + row + col + dir);
 
-        //System.out.println("DEBUG: " + row + col + dir);
-
-        /*if (col >= 0 && col <= 9 && row != -1 && dir != -1) // Check valid input
+        if (col >= 0 && col <= 8 && row != -1 && dir != -1) // Check valid input
         {
-            if (!hasErrors(row, col, dir, p, normCounter)) // Check if errors will produce (out of bounds)
+            if (hasErrors(row, col, dir, this, setupNormCounter)) // Check if errors will produce (out of bounds)
             {
-                break;
+                return;
             }
-        }*/
-
-        dir = 0;
+        }
 
 
         //System.out.println("FURTHER DEBUG: row = " + row + "; col = " + col);
-        this.ships[normCounter].setLocation(row, col);
-        this.ships[normCounter].setDirection(dir);
-        this.playerBoard.addShip(this.ships[normCounter]);
+        this.ships[setupNormCounter].setLocation(row, col);
+        this.ships[setupNormCounter].setDirection(dir);
+        this.playerBoard.addShip(this.ships[setupNormCounter]);
         System.out.println();
         System.out.println("You have " + this.numOfShipsLeft() + " remaining ships to place.");
 
-        normCounter++;
+        setupNormCounter++;
         counter++;
+    }
+
+    private static boolean hasErrors(int row, int col, int dir, Player p, int count)
+    {
+        //System.out.println("DEBUG: count arg is " + count);
+
+        int length = p.ships[count].getLength();
+
+        // Check if off grid - Horizontal
+        if (dir == 0)
+        {
+            int checker = length + col;
+            //System.out.println("DEBUG: checker is " + checker);
+            if (checker > 10)
+            {
+                System.out.println("SHIP DOES NOT FIT");
+                return true;
+            }
+        }
+
+        // Check if off grid - Vertical
+        if (dir == 1) // VERTICAL
+        {
+            int checker = length + row;
+            //System.out.println("DEBUG: checker is " + checker);
+            if (checker > 10)
+            {
+                System.out.println("SHIP DOES NOT FIT");
+                return true;
+            }
+        }
+
+        // Check if overlapping with another ship
+        if (dir == 0) // Hortizontal
+        {
+            // For each location a ship occupies, check if ship is already there
+            for (int i = col; i < col+length; i++)
+            {
+                //System.out.println("DEBUG: row = " + row + "; col = " + i);
+                if(p.playerBoard.hasShip(row, i))
+                {
+                    System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
+                    return true;
+                }
+            }
+        }
+        else if (dir == 1) // Vertical
+        {
+            // For each location a ship occupies, check if ship is already there
+            for (int i = row; i < row+length; i++)
+            {
+                //System.out.println("DEBUG: row = " + row + "; col = " + i);
+                if(p.playerBoard.hasShip(i, col))
+                {
+                    System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

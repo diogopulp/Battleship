@@ -115,14 +115,14 @@ public class Board
                     board[row-1][col].setLengthOfShip(length);
                     board[row-1][col].setWidthOfShip(width);
                     board[row-1][col].setDirectionOfShip(dir);
-                    board[row][i].setImg(R.drawable.block);
+                    board[row-1][col].setImg(R.drawable.block);
 
                     // Put piece bellow
                     board[row+1][col].setShip(true);
                     board[row+1][col].setLengthOfShip(length);
                     board[row+1][col].setWidthOfShip(width);
                     board[row+1][col].setDirectionOfShip(dir);
-                    board[row][i].setImg(R.drawable.block);
+                    board[row+1][col].setImg(R.drawable.block);
                 }
             }
         }
@@ -136,6 +136,7 @@ public class Board
                 board[i][col].setLengthOfShip(length);
                 board[i][col].setWidthOfShip(width);
                 board[i][col].setDirectionOfShip(dir);
+                board[i][col].setImg(R.drawable.block);
 
                 // 5 Pieces ship
                 if(s.getWidth() == 2 && board[row][col-1].hasShip() == false && board[row][col+1].hasShip() == false){
@@ -145,12 +146,14 @@ public class Board
                     board[row][col-1].setLengthOfShip(length);
                     board[row][col-1].setWidthOfShip(width);
                     board[row][col-1].setDirectionOfShip(dir);
+                    board[row][col-1].setImg(R.drawable.block);
 
                     // Put piece on right
                     board[row][col+1].setShip(true);
                     board[row][col+1].setLengthOfShip(length);
                     board[row][col+1].setWidthOfShip(width);
                     board[row][col+1].setDirectionOfShip(dir);
+                    board[row][col+1].setImg(R.drawable.block);
                 }
             }
         }
