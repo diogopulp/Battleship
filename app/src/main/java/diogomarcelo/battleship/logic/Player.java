@@ -257,6 +257,10 @@ public class Player extends BaseAdapter
         counter++;
     }
 
+    public int getCurrentShipSize(){
+        return ships[setupNormCounter].getLength()+ships[setupNormCounter].getWidth();
+    }
+
     private static boolean hasErrors(int row, int col, int dir, Player p, int count)
     {
         //System.out.println("DEBUG: count arg is " + count);

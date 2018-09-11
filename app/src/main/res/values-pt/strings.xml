@@ -12,4 +12,12 @@
     <string name="studentnumber_tv">Número de Aluno:</string>
     <string name="class_tv">Disciplina:</string>
     <string name="institution_tv">Instituição:</string>
+
+    <!-- Game Activity -->
+    <string name="ship1piece_tv">Navio de 1 Peça</string>
+    <string name="ship2pieces_tv">Navio de 2 Peças</string>
+    <string name="ship3pieces_tv">Navio de 3 Peças</string>
+    <string name="ship5pieces_tv">Navio de 5 Peças</string>
+    <string name="next_bt">Avançar</string>
+    <string name="setupPhase_tv">Fase de configuração</string>
 </resources>
