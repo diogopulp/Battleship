@@ -11,7 +11,7 @@ import diogomarcelo.battleship.logic.Player;
 public class MainActivity extends AppCompatActivity {
 
     Player p1, p2;
-    Button btnSinglePlayer, btnMultiPlayer;
+    Button btnSinglePlayer, btnMultiPlayer, btnCredits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnSinglePlayer = findViewById(R.id.btn_singleplayer);
         btnMultiPlayer = findViewById(R.id.btn_multiplayer);
+        btnCredits = findViewById(R.id.btn_credits);
 
         btnSinglePlayer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
@@ -35,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             {
                 Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                 myIntent.putExtra("GAME_TYPE", "MULTI_PLAYER"); //Optional parameters
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
+        btnCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, CreditsActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
         });

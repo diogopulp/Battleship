@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">BattleShip</string>
+
+    <!-- Main Activity -->
     <string name="newsinglegame_bt">Single Player</string>
     <string name="newmultiplayergame_bt">Multi Player</string>
+    <string name="credits_bt">Credits</string>
+
+    <!-- CreditsActivity Activity -->
+    <string name="madeby_tv">Made By:</string>
+    <string name="studentnumber_tv">Student Number:</string>
+    <string name="class_tv">Class:</string>
+    <string name="institution_tv">Institution:</string>
 </resources>

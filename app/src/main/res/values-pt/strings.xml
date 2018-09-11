@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Batalha Naval</string>
+
+    <!-- Main Activity -->
+    <string name="newsinglegame_bt">Um Jogador</string>
+    <string name="newmultiplayergame_bt">Multi Jogador</string>
+    <string name="credits_bt">Créditos</string>
+
+    <!-- CreditsActivity Activity -->
+    <string name="madeby_tv">Realizado Por:</string>
+    <string name="studentnumber_tv">Número de Aluno:</string>
+    <string name="class_tv">Disciplina:</string>
+    <string name="institution_tv">Instituição:</string>
 </resources>
