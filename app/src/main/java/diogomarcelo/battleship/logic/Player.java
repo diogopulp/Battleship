@@ -22,6 +22,8 @@ public class Player extends BaseAdapter
     public Ship[] ships;
     public Board playerBoard;
 
+    private String lastErrorMessage;
+
     private Context mContext;
     private Integer[] mThumbIds;
     //private Board board;
@@ -32,6 +34,8 @@ public class Player extends BaseAdapter
 
         this.screenHeight = height;
         this.screenWidth = width;
+
+        this.setLastErrorMessage(" ");
 
         System.out.println("Height: " + screenHeight);
         System.out.println("Width: " + screenWidth);
@@ -81,6 +85,14 @@ public class Player extends BaseAdapter
         s.setLocation(row, col);
         s.setDirection(direction);
         playerBoard.addShip(s);
+    }
+
+    public String getLastErrorMessage() {
+        return lastErrorMessage;
+    }
+
+    public void setLastErrorMessage(String lastErrorMessage) {
+        this.lastErrorMessage = lastErrorMessage;
     }
 
 
@@ -220,7 +232,7 @@ public class Player extends BaseAdapter
 
     }
 
-    public void setup(int position) {
+    public boolean setup(int position) {
 
         // Boats Position
 
@@ -241,7 +253,7 @@ public class Player extends BaseAdapter
         {
             if (hasErrors(row, col, dir, this, setupNormCounter)) // Check if errors will produce (out of bounds)
             {
-                return;
+                return false;
             }
         }
 
@@ -255,13 +267,14 @@ public class Player extends BaseAdapter
 
         setupNormCounter++;
         counter++;
+        return true;
     }
 
     public int getCurrentShipSize(){
         return ships[setupNormCounter].getLength()+ships[setupNormCounter].getWidth();
     }
 
-    private static boolean hasErrors(int row, int col, int dir, Player p, int count)
+    private boolean hasErrors(int row, int col, int dir, Player p, int count)
     {
         //System.out.println("DEBUG: count arg is " + count);
 
@@ -274,7 +287,7 @@ public class Player extends BaseAdapter
             //System.out.println("DEBUG: checker is " + checker);
             if (checker > 8)
             {
-                System.out.println("SHIP DOES NOT FIT");
+                setLastErrorMessage(mContext.getResources().getString(R.string.notfit_msg));
                 return true;
             }
         }
@@ -286,7 +299,7 @@ public class Player extends BaseAdapter
             //System.out.println("DEBUG: checker is " + checker);
             if (checker > 8)
             {
-                System.out.println("SHIP DOES NOT FIT");
+                setLastErrorMessage(mContext.getResources().getString(R.string.notfit_msg));
                 return true;
             }
         }
@@ -300,17 +313,17 @@ public class Player extends BaseAdapter
                 //System.out.println("DEBUG: row = " + row + "; col = " + i);
                 if(p.playerBoard.hasShip(row, i))
                 {
-                    System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
+                    setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipatlocation_msg));
                     return true;
                 }
 
-                // -------- Navios em redor --------
+                // -------- Near Ships --------
 
                 // ACIMA
                 if(row != 0){
                     if(p.playerBoard.hasShip(row-1, i))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -319,7 +332,7 @@ public class Player extends BaseAdapter
                 if(row != 7){
                     if(p.playerBoard.hasShip(row+1, i))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -328,7 +341,7 @@ public class Player extends BaseAdapter
                 if(i != 0){
                     if(p.playerBoard.hasShip(row, i-1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -337,7 +350,7 @@ public class Player extends BaseAdapter
                 if(i != 7){
                     if(p.playerBoard.hasShip(row, i+1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -346,7 +359,7 @@ public class Player extends BaseAdapter
                 if(row != 0 && i !=0){
                     if(p.playerBoard.hasShip(row-1, i-1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -355,7 +368,7 @@ public class Player extends BaseAdapter
                 if(row != 0 && i !=7){
                     if(p.playerBoard.hasShip(row-1, i+1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -364,7 +377,7 @@ public class Player extends BaseAdapter
                 if(row != 7 && i !=0){
                     if(p.playerBoard.hasShip(row+1, i-1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -373,7 +386,7 @@ public class Player extends BaseAdapter
                 if(row != 7 && i !=7){
                     if(p.playerBoard.hasShip(row+1, i+1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }*/
@@ -387,7 +400,7 @@ public class Player extends BaseAdapter
                 //System.out.println("DEBUG: row = " + row + "; col = " + i);
                 if(p.playerBoard.hasShip(i, col))
                 {
-                    System.out.println("THERE IS ALREADY A SHIP AT THAT LOCATION");
+                    setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipatlocation_msg));
                     return true;
                 }
 
@@ -395,7 +408,7 @@ public class Player extends BaseAdapter
                 // DIREITA
                 if(col != 0) {
                     if (p.playerBoard.hasShip(i, col - 1)) {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -403,7 +416,7 @@ public class Player extends BaseAdapter
                 // ESQUERDA
                 if(col != 7) {
                     if (p.playerBoard.hasShip(i, col + 1)) {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -411,7 +424,7 @@ public class Player extends BaseAdapter
                 // ABAIXO
                 if(i != 0) {
                     if (p.playerBoard.hasShip(i-1, col)) {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -419,7 +432,7 @@ public class Player extends BaseAdapter
                 // ACIMA
                 if(i != 7) {
                     if (p.playerBoard.hasShip(i+1, col)) {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -428,7 +441,7 @@ public class Player extends BaseAdapter
                 /*if(col != 0 && i !=0){
                     if(p.playerBoard.hasShip(col-1, i-1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -437,7 +450,7 @@ public class Player extends BaseAdapter
                 if(col != 0 && i !=7){
                     if(p.playerBoard.hasShip(col-1, i+1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -446,7 +459,7 @@ public class Player extends BaseAdapter
                 if(col != 7 && i !=0){
                     if(p.playerBoard.hasShip(col+1, i-1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }
@@ -455,7 +468,7 @@ public class Player extends BaseAdapter
                 if(col != 7 && i !=7){
                     if(p.playerBoard.hasShip(col+1, i+1))
                     {
-                        System.out.println("THERE IS ALREADY A SHIP NEAR THIS LOCATION");
+                        setLastErrorMessage(mContext.getResources().getString(R.string.alreadyshipnear_msg));
                         return true;
                     }
                 }*/

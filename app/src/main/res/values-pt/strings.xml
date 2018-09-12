@@ -19,5 +19,13 @@
     <string name="ship3pieces_tv">Navio de 3 Peças</string>
     <string name="ship5pieces_tv">Navio de 5 Peças</string>
     <string name="next_bt">Avançar</string>
-    <string name="setupPhase_tv">Fase de configuração</string>
+    <string name="setupPhase_tv">Fase de Configuração</string>
+    <string name="gamePhase_tv">Fase de Jogo</string>
+
+    <!-- Warning Messages -->
+    <string name="notfit_msg">O Navio Não Cabe Neste Local!</string>
+    <string name="alreadyshipatlocation_msg">Já Existe Um Navio Neste Local!</string>
+    <string name="alreadyshipnear_msg">Já Existe Um Navio Perto Deste Local!</string>
+    <string name="hit_msg">Tiro!</string>
+    <string name="sea_msg">Água...</string>
 </resources>

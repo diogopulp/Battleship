@@ -19,4 +19,12 @@
     <string name="ship5pieces_tv">5 Pieces Ship</string>
     <string name="next_bt">Next</string>
     <string name="setupPhase_tv">Setup Phase</string>
+    <string name="gamePhase_tv">Game Phase</string>
+
+    <!-- Warning Messages -->
+    <string name="notfit_msg">Ship Does Not Fit In This Location!</string>
+    <string name="alreadyshipatlocation_msg">There Is Already A Ship In This Location!</string>
+    <string name="alreadyshipnear_msg">There Is Already A Ship Near This Location!</string>
+    <string name="hit_msg">Hit!</string>
+    <string name="sea_msg">Sea...</string>
 </resources>

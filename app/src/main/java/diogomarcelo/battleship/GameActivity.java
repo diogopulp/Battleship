@@ -6,6 +6,7 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +14,15 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import diogomarcelo.battleship.logic.Player;
 
 public class GameActivity extends AppCompatActivity {
 
     Player p1, p2;
 
-    TextView textView, firstShipTV, secondShipTV, thirdShipTV, fourthShipTV, fivethShipTV, sixethShipTV, seventhShipTV, arrow, p1TV, p2TV;
+    TextView textView, firstShipTV, secondShipTV, thirdShipTV, fourthShipTV, fivethShipTV, sixethShipTV, seventhShipTV, arrow, p1TV, p2TV, phaseTitle;
     DisplayMetrics displayMetrics;
     GridView gridViewP1, gridViewP2;
     Button nextButton;
@@ -48,12 +51,14 @@ public class GameActivity extends AppCompatActivity {
 
         arrow = findViewById(R.id.arrow);
 
+        phaseTitle = findViewById(R.id.phaseTitle_tv);
+
         nextButton.setVisibility(View.GONE);
         p2TV.setVisibility(View.GONE);
 
         Intent intent= getIntent();
         Bundle b = intent.getExtras();
-        String game_type;
+        final String game_type;
 
         // Get Game Type
         game_type =(String) b.get("GAME_TYPE");
@@ -75,169 +80,154 @@ public class GameActivity extends AppCompatActivity {
         gridViewP1.setAdapter(p1);
         gridViewP2.setAdapter(p2);
 
-        //Toast.makeText(GameActivity.this, "Place the " + p1.getCurrentShipSize() + " piece size ship."  , Toast.LENGTH_LONG).show();
-
-        gridViewP1.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                int currentXPos = (int) event.getX();
-                int currentYPos = (int) event.getY();
-
-                position = gridViewP1.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
-
-                //Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
-
-                //int shipsize;
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN)
-                    if(p1.numOfShipsLeft()>0){
-                        p1.setup(position);
-                        p1.notifyDataSetChanged();
-                    }
-
-                if(p1.numOfShipsLeft()==0){
-                    nextButton.setVisibility(View.VISIBLE);
-                }
-
-                if(p1.numOfShipsLeft()!=-1){
-
-                    switch (p1.numOfShipsLeft()){
-                        case 6:
-                            firstShipTV.setVisibility(View.GONE);
-                            break;
-                        case 5:
-                            secondShipTV.setVisibility(View.GONE);
-                            break;
-                        case 4:
-                            thirdShipTV.setVisibility(View.GONE);
-                            break;
-                        case 3:
-                            fourthShipTV.setVisibility(View.GONE);
-                            break;
-                        case 2:
-                            fivethShipTV.setVisibility(View.GONE);
-                            break;
-                        case 1:
-                            sixethShipTV.setVisibility(View.GONE);
-                            break;
-                        case 0:
-                            seventhShipTV.setVisibility(View.GONE);
-                            arrow.setVisibility(View.GONE);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    //Toast.makeText(GameActivity.this, "Place the " + p1.getCurrentShipSize() + " pieces ship."  , Toast.LENGTH_SHORT).show();
-                }
-
-
-                return event.getAction() == MotionEvent.ACTION_MOVE;
-
-            }
-
-        });
-
-        gridViewP2.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                int currentXPos = (int) event.getX();
-                int currentYPos = (int) event.getY();
-
-                position = gridViewP2.pointToPosition(currentXPos, currentYPos); // Converte coordenadas para a posição da Gridview
-
-                //Toast.makeText(GameActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show(); // TODO Adicionar à biblioteca de strings
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN)
-                    if(p2.numOfShipsLeft()>0){
-                        p2.setup(position);
-                        p2.notifyDataSetChanged();
-                    }
-
-                if(p2.numOfShipsLeft()==0){
-                    //nextButton.setVisibility(View.VISIBLE);
-                    gridViewP2.setVisibility(View.GONE);
-                    gridViewP1.setVisibility(View.VISIBLE);
-
-                }
-
-                if(p2.numOfShipsLeft()!=-1){
-
-                    switch (p2.numOfShipsLeft()){
-                        case 6:
-                            firstShipTV.setVisibility(View.GONE);
-                            break;
-                        case 5:
-                            secondShipTV.setVisibility(View.GONE);
-                            break;
-                        case 4:
-                            thirdShipTV.setVisibility(View.GONE);
-                            break;
-                        case 3:
-                            fourthShipTV.setVisibility(View.GONE);
-                            break;
-                        case 2:
-                            fivethShipTV.setVisibility(View.GONE);
-                            break;
-                        case 1:
-                            sixethShipTV.setVisibility(View.GONE);
-                            break;
-                        case 0:
-                            seventhShipTV.setVisibility(View.GONE);
-                            arrow.setVisibility(View.GONE);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    //Toast.makeText(GameActivity.this, "Place the " + p1.getCurrentShipSize() + " pieces ship."  , Toast.LENGTH_SHORT).show();
-                }
-
-                return event.getAction() == MotionEvent.ACTION_MOVE;
-
-            }
-
-        });
-
-
-        // Human VS CPU
-        if (game_type.equalsIgnoreCase("SINGLE_PLAYER")){
-
-
-        }
-        // Human VS Human
-        else{
-
-        }
-
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gridViewP1.setVisibility(View.GONE);
                 nextButton.setVisibility(View.GONE);
-                changePlayer();
                 gridViewP2.setVisibility(View.VISIBLE);
-
-                if(p2.numOfShipsLeft()!=-1) {
-                    firstShipTV.setVisibility(View.VISIBLE);
-                    secondShipTV.setVisibility(View.VISIBLE);
-                    thirdShipTV.setVisibility(View.VISIBLE);
-                    fourthShipTV.setVisibility(View.VISIBLE);
-                    fivethShipTV.setVisibility(View.VISIBLE);
-                    sixethShipTV.setVisibility(View.VISIBLE);
-                    seventhShipTV.setVisibility(View.VISIBLE);
-                    arrow.setVisibility(View.VISIBLE);
-                }
+                gameStart(game_type);
 
             }
         });
 
+        // Game Setup Phase
 
+            gridViewP1.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    int currentXPos = (int) event.getX();
+                    int currentYPos = (int) event.getY();
+
+                    position = gridViewP1.pointToPosition(currentXPos, currentYPos);
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN)
+                        if (p1.numOfShipsLeft() > 0) {
+                            if (p1.setup(position)) {
+                            } else {
+                                Toast.makeText(GameActivity.this, p1.getLastErrorMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            p1.notifyDataSetChanged();
+                        }
+
+                    if (p1.numOfShipsLeft() == 0) {
+                        nextButton.setVisibility(View.VISIBLE);
+                    }
+
+                    if (p1.numOfShipsLeft() != -1) {
+
+                        switch (p1.numOfShipsLeft()) {
+                            case 6:
+                                firstShipTV.setVisibility(View.GONE);
+                                break;
+                            case 5:
+                                secondShipTV.setVisibility(View.GONE);
+                                break;
+                            case 4:
+                                thirdShipTV.setVisibility(View.GONE);
+                                break;
+                            case 3:
+                                fourthShipTV.setVisibility(View.GONE);
+                                break;
+                            case 2:
+                                fivethShipTV.setVisibility(View.GONE);
+                                break;
+                            case 1:
+                                sixethShipTV.setVisibility(View.GONE);
+                                break;
+                            case 0:
+                                seventhShipTV.setVisibility(View.GONE);
+                                arrow.setVisibility(View.GONE);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+
+                    return event.getAction() == MotionEvent.ACTION_MOVE;
+
+                }
+
+            });
+    }
+
+
+
+    public void gameStart(String gameType){
+
+        if(gameType.equalsIgnoreCase("SINGLE_PLAYER")) {
+
+            // CPU Setup
+            while (p2.numOfShipsLeft() != 0) {
+                int numofships = p2.numOfShipsLeft();
+                position = new Random().nextInt(64);
+                p2.setup(position);
+            }
+
+
+            // Play Phase
+            phaseTitle.setText(R.string.gamePhase_tv);
+
+            // Human
+            gridViewP2.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    int pos;
+                    int currentXPos = (int) event.getX();
+                    int currentYPos = (int) event.getY();
+
+                    pos = gridViewP2.pointToPosition(currentXPos, currentYPos);
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        int row = p2.positionToRow(pos);
+                        int col = p2.positionToCol(pos);
+
+                        if (p2.getBoard().hasShip(row, col)) {
+                            p2.getBoard().markHit(row, col);
+                            p2.notifyDataSetChanged();
+                            Toast.makeText(GameActivity.this, R.string.hit_msg, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(GameActivity.this, R.string.sea_msg, Toast.LENGTH_SHORT).show();
+                            // CPU
+                            changePlayer();
+                                boolean hit = true;
+                                while (true){
+                                    pos = new Random().nextInt(64);
+                                    row = p1.positionToRow(pos);
+                                    col = p1.positionToCol(pos);
+                                    Log.i("CPU TRY","ROW: " + Integer.toString(row) + " COL: " +Integer.toString(col));
+                                    if(p1.getBoard().hasShip(row,col)){
+                                        p1.getBoard().markHit(row,col);
+                                        Log.i("CPU HIT","ROW: " + Integer.toString(row) + " COL: " +Integer.toString(col));
+                                    }else{
+                                        changePlayer();
+                                        return event.getAction() == MotionEvent.ACTION_MOVE;
+                                        //hit = false;
+                                    }
+                                }
+
+                        }
+                    }
+
+                            /*
+                            if(p2.numOfShipsLeft()>0){
+                                p2.setup(pos);
+                                p2.notifyDataSetChanged();
+                            }*/
+
+                    return event.getAction() == MotionEvent.ACTION_MOVE;
+
+                }
+
+            });
+        }else if(gameType.equalsIgnoreCase("MULTI_PLAYER")){
+
+        }
 
 
     }
@@ -246,9 +236,14 @@ public class GameActivity extends AppCompatActivity {
         if (p1TV.getVisibility() == View.VISIBLE) {
             p1TV.setVisibility(View.GONE);
             p2TV.setVisibility(View.VISIBLE);
+            gridViewP2.setVisibility(View.GONE);
+            gridViewP1.setVisibility(View.VISIBLE);
         }else if(p2TV.getVisibility() == View.VISIBLE){
             p2TV.setVisibility(View.GONE);
             p1TV.setVisibility(View.VISIBLE);
+            gridViewP1.setVisibility(View.GONE);
+            gridViewP2.setVisibility(View.VISIBLE);
+
         }
     }
 

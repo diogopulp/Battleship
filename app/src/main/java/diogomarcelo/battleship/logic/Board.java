@@ -28,6 +28,7 @@ public class Board
     public void markHit(int row, int col)
     {
         board[row][col].markHit();
+        board[row][col].setImg(R.drawable.block_red);
         points++;
     }
 
@@ -141,19 +142,21 @@ public class Board
                 // 5 Pieces ship
                 if(s.getWidth() == 2 && board[row][col-1].hasShip() == false && board[row][col+1].hasShip() == false){
 
-                    // Put piece on left
-                    board[row][col-1].setShip(true);
-                    board[row][col-1].setLengthOfShip(length);
-                    board[row][col-1].setWidthOfShip(width);
-                    board[row][col-1].setDirectionOfShip(dir);
-                    board[row][col-1].setImg(R.drawable.block);
+                    if(col-1 > -1 || col+1 < 8) {
+                        // Put piece on left
+                        board[row][col - 1].setShip(true);
+                        board[row][col - 1].setLengthOfShip(length);
+                        board[row][col - 1].setWidthOfShip(width);
+                        board[row][col - 1].setDirectionOfShip(dir);
+                        board[row][col - 1].setImg(R.drawable.block);
 
-                    // Put piece on right
-                    board[row][col+1].setShip(true);
-                    board[row][col+1].setLengthOfShip(length);
-                    board[row][col+1].setWidthOfShip(width);
-                    board[row][col+1].setDirectionOfShip(dir);
-                    board[row][col+1].setImg(R.drawable.block);
+                        // Put piece on right
+                        board[row][col + 1].setShip(true);
+                        board[row][col + 1].setLengthOfShip(length);
+                        board[row][col + 1].setWidthOfShip(width);
+                        board[row][col + 1].setDirectionOfShip(dir);
+                        board[row][col + 1].setImg(R.drawable.block);
+                    }
                 }
             }
         }
