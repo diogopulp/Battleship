@@ -170,6 +170,7 @@ public class GameActivity extends AppCompatActivity {
 
             // Play Phase
             phaseTitle.setText(R.string.gamePhase_tv);
+            p2.getBoard().hideShips();
 
             // Human
             gridViewP2.setOnTouchListener(new View.OnTouchListener() {
@@ -197,6 +198,7 @@ public class GameActivity extends AppCompatActivity {
                             changePlayer();
                                 boolean hit = true;
                                 while (true){
+
                                     pos = new Random().nextInt(64);
                                     row = p1.positionToRow(pos);
                                     col = p1.positionToCol(pos);

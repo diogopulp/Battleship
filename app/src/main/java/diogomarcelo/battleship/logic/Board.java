@@ -32,6 +32,16 @@ public class Board
         points++;
     }
 
+    public void hideShips()
+    {
+        for(int i=0; i<8;i++){
+            for(int j=0; j<8;j++){
+                board[i][j].setImg(0);
+            }
+        }
+
+    }
+
     public void markMiss(int row, int col)
     {
         board[row][col].markMiss();
