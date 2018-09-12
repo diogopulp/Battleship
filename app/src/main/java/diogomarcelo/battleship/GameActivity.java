@@ -214,13 +214,13 @@ public class GameActivity extends AppCompatActivity {
 
         }
 
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gridViewP1.setVisibility(View.GONE);
                 nextButton.setVisibility(View.GONE);
-                p1TV.setVisibility(View.GONE);
-                p2TV.setVisibility(View.VISIBLE);
+                changePlayer();
                 gridViewP2.setVisibility(View.VISIBLE);
 
                 if(p2.numOfShipsLeft()!=-1) {
@@ -240,6 +240,16 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void changePlayer(){
+        if (p1TV.getVisibility() == View.VISIBLE) {
+            p1TV.setVisibility(View.GONE);
+            p2TV.setVisibility(View.VISIBLE);
+        }else if(p2TV.getVisibility() == View.VISIBLE){
+            p2TV.setVisibility(View.GONE);
+            p1TV.setVisibility(View.VISIBLE);
+        }
     }
 
     public void vibrate() {
