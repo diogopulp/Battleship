@@ -232,7 +232,7 @@ public class Player extends BaseAdapter
 
     }
 
-    public boolean setup(int position) {
+    public boolean setup(int position, int dir) {
 
         // Boats Position
 
@@ -240,12 +240,10 @@ public class Player extends BaseAdapter
 
         int row = -1;
         int col = -1;
-        int dir = -1;
 
         row = this.positionToRow(position);
         col = this.positionToCol(position);
 
-        dir = 1;
 
         System.out.println("DEBUG: " + row + col + dir);
 

@@ -27,4 +27,7 @@
     <string name="alreadyshipnear_msg">There Is Already A Ship Near This Location!</string>
     <string name="hit_msg">Hit!</string>
     <string name="sea_msg">Sea...</string>
+    <string name="p1wins_msg">Player 1 Wins</string>
+    <string name="p2wins_msg">Player 2 Wins</string>
+    <string name="cpu_msg">CPU Wins</string>
 </resources>

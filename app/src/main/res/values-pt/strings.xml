@@ -28,4 +28,7 @@
     <string name="alreadyshipnear_msg">Já Existe Um Navio Perto Deste Local!</string>
     <string name="hit_msg">Tiro!</string>
     <string name="sea_msg">Água...</string>
+    <string name="p1wins_msg">O Jogador 1 Ganhou</string>
+    <string name="p2wins_msg">O Jogador 2 Ganhou</string>
+    <string name="cpu_msg">O Computador Ganhou</string>
 </resources>

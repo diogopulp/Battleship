@@ -14,6 +14,7 @@ public class Board
     {
 
         board = new Location[NUM_ROWS][NUM_COLS];
+        points = 0;
 
         for (int row = 0; row < board.length; row++)
         {
@@ -34,8 +35,8 @@ public class Board
 
     public void hideShips()
     {
-        for(int i=0; i<8;i++){
-            for(int j=0; j<8;j++){
+        for(int i=0; i<NUM_ROWS ;i++){
+            for(int j=0; j<NUM_COLS ;j++){
                 board[i][j].setImg(0);
             }
         }

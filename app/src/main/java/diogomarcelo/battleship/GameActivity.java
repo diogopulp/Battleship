@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +27,18 @@ public class GameActivity extends AppCompatActivity {
     DisplayMetrics displayMetrics;
     GridView gridViewP1, gridViewP2;
     Button nextButton;
+    ImageButton rotateShipBtn;
     int height, width;
     int position = -1;
+
+    int orientation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        orientation = 0;
 
         //FOR DEBUG ONLY
         //textView = findViewById(R.id.tvTest);
@@ -45,6 +51,8 @@ public class GameActivity extends AppCompatActivity {
         fivethShipTV = findViewById(R.id.fivethship);
         sixethShipTV = findViewById(R.id.sixethship);
         seventhShipTV = findViewById(R.id.sevethship);
+
+        rotateShipBtn = findViewById(R.id.rotate_btn);
 
         p1TV = findViewById(R.id.p1_tv);
         p2TV = findViewById(R.id.p2_tv);
@@ -93,6 +101,13 @@ public class GameActivity extends AppCompatActivity {
 
         // Game Setup Phase
 
+        rotateShipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setOrientation();
+            }
+        });
+
             gridViewP1.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
@@ -103,16 +118,18 @@ public class GameActivity extends AppCompatActivity {
 
                     position = gridViewP1.pointToPosition(currentXPos, currentYPos);
 
-                    if (event.getAction() == MotionEvent.ACTION_DOWN)
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         if (p1.numOfShipsLeft() > 0) {
-                            if (p1.setup(position)) {
+                            if (p1.setup(position, orientation)) {
                             } else {
                                 Toast.makeText(GameActivity.this, p1.getLastErrorMessage(), Toast.LENGTH_SHORT).show();
                             }
                             p1.notifyDataSetChanged();
                         }
+                    }
 
                     if (p1.numOfShipsLeft() == 0) {
+                        rotateShipBtn.setVisibility(View.GONE);
                         nextButton.setVisibility(View.VISIBLE);
                     }
 
@@ -164,7 +181,8 @@ public class GameActivity extends AppCompatActivity {
             while (p2.numOfShipsLeft() != 0) {
                 int numofships = p2.numOfShipsLeft();
                 position = new Random().nextInt(64);
-                p2.setup(position);
+                int dir = new Random().nextInt(2);
+                p2.setup(position,dir);
             }
 
 
@@ -191,8 +209,14 @@ public class GameActivity extends AppCompatActivity {
                         if (p2.getBoard().hasShip(row, col)) {
                             p2.getBoard().markHit(row, col);
                             p2.notifyDataSetChanged();
+                            if(p2.getBoard().hasLost()){
+                                Toast.makeText(GameActivity.this, R.string.p1wins_msg, Toast.LENGTH_SHORT).show();
+                                finish();
+                                return event.getAction() == MotionEvent.ACTION_MOVE;
+                            }
                             Toast.makeText(GameActivity.this, R.string.hit_msg, Toast.LENGTH_SHORT).show();
                         } else {
+                            p2.getBoard().markMiss(row,col);
                             Toast.makeText(GameActivity.this, R.string.sea_msg, Toast.LENGTH_SHORT).show();
                             // CPU
                             changePlayer();
@@ -205,8 +229,14 @@ public class GameActivity extends AppCompatActivity {
                                     Log.i("CPU TRY","ROW: " + Integer.toString(row) + " COL: " +Integer.toString(col));
                                     if(p1.getBoard().hasShip(row,col)){
                                         p1.getBoard().markHit(row,col);
+                                        if(p1.getBoard().hasLost()){
+                                            Toast.makeText(GameActivity.this, R.string.cpu_msg, Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            return event.getAction() == MotionEvent.ACTION_MOVE;
+                                        }
                                         Log.i("CPU HIT","ROW: " + Integer.toString(row) + " COL: " +Integer.toString(col));
                                     }else{
+                                        p1.getBoard().markMiss(row,col);
                                         changePlayer();
                                         return event.getAction() == MotionEvent.ACTION_MOVE;
                                         //hit = false;
@@ -248,6 +278,15 @@ public class GameActivity extends AppCompatActivity {
 
         }
     }
+
+    public void setOrientation() {
+        if(orientation == 0){
+            orientation = 1;
+        }else if(orientation == 1){
+            orientation = 0;
+        }
+    }
+
 
     public void vibrate() {
 
